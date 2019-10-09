@@ -1,0 +1,137 @@
+//EMPLOYEE RECORD MAINTAINENECE//
+#include<iostream.h>
+#include<conio.h>
+#include<fstream.h>
+#include<stdio.h>
+
+class employee
+{ intempno;
+charempname[20];
+float salary;
+public:
+voidgetdata()
+{ cout<<"empno";
+cin>>empno;
+cout<<"empname";
+cin>>empname;
+cout<<"salary";
+cin>>salary;
+ }
+voidputdata()
+{ cout<<"employ name:"<<empname<<endl;
+cout<<"salary:"<<salary<<endl;
+cout<<"empnumber-:"<<empno<<endl;
+ }
+intgetempno()
+ {
+returnempno;
+ }
+}E1,emp;
+void add()
+ {
+ofstreamfo("emp.dat",ios::app|ios::binary);
+charans='y';
+while(ans=='y')
+ {
+E1.getdata();
+fo.write((char*)&E1,sizeof(E1));
+cout<<"record added to file:";
+cout<<"want to enter more records?(y/n)";
+cin>>ans;
+ }
+fo.close();
+ }
+
+
+void del()
+ {
+ifstreamfio("emp.dat",ios::in);
+ofstream file("temp.dat",ios::out);
+intempno; char found='f',confirm='n';
+cout<<"enter empno of the employee whose records is to be deleted\n";
+cin>>empno;
+while(!fio.eof())
+{ fio.read((char*)&E1,sizeof(E1));
+if(E1.getempno()==empno)
+  {
+E1.putdata();
+found='t';
+cout<<"are you sure you want to delete this record?(y/n)";
+cin>>confirm;
+if(confirm=='n')
+file.write((char*)&E1,sizeof(E1));
+  }
+else
+file.write((char*)&E1,sizeof(E1));
+  }
+if(found=='f')
+cout<<"record not found!!\n";
+fio.close();
+file.close();
+remove("emp.dat");
+rename("temp.dat","emp.dat");
+fio.open("emp.dat",ios::in);
+cout<<"now the file contains \n";
+while(!fio.eof())
+  {
+fio.read((char*)&emp,sizeof(emp));
+if(fio.eof()) break;
+emp.putdata();
+  }
+fio.close();
+  }
+
+void search()
+  {
+int en;
+char found='n';
+ifstream fi("emp.dat",ios::in);
+cout<<"enter empnumber to be searched for:";
+cin>>en;
+while(!fi.eof())
+  {
+fi.read((char*)&E1,sizeof(E1));
+if(E1.getempno()==en)
+  {
+E1.putdata();
+found='y';
+break;
+  }
+  }
+if(found=='n')
+cout<<"empno not in file!!"<<endl;
+fi.close();
+  }
+
+void display()
+  {
+ifstream fin("emp.dat",ios::in);
+while(!fin.eof())
+{ fin.read((char*)&E1,sizeof(E1));
+E1.putdata();
+  }
+fin.close();
+  }
+
+void main()
+  {
+intch;
+do
+  {cout<<"\n WELCOME TO THE EMPLOYEE MAINTAINENCE DEPARTMENT \n" ;
+	cout<<" 1.add\n";
+cout<<" 2. display\n";
+cout<<" 3. search\n";
+cout<<" 4. delete\n";
+cout<<" 5. exit\n";
+cout<<" enter your choice";
+cin>>ch;
+switch(ch)
+{ case 1: add(); break;
+case 2: display(); break;
+case 3: search(); break;
+case 4: del(); break;
+default: cout<<"invalid choice";
+  }
+}while(ch!=5);
+getch();
+  }
