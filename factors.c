@@ -1,3 +1,4 @@
+//program to check factors of a given number.
 #include<stdio.h>
 #include<conio.h>
 int main()
